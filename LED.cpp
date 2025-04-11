@@ -25,7 +25,7 @@ void LED::blink(int times, int blinkSpeed){
 }
 
 void LED::pulsateLED(){	  
-  _currentLEDBrightness = _currentLEDBrightness + (BrightnessStepSize * _pulsateDirection);  
+  _currentLEDBrightness = _currentLEDBrightness + (_brightnessStepSize * _pulsateDirection);  
   analogWrite(_ledPin, _currentLEDBrightness);
-  if(_currentLEDBrightness + BrightnessStepSize > MAX_BRIGHTNESS || _currentLEDBrightness - BrightnessStepSize < 0) _pulsateDirection *= -1;
+  if(_currentLEDBrightness + _brightnessStepSize > MAX_BRIGHTNESS || _currentLEDBrightness - _brightnessStepSize < 0) _pulsateDirection *= -1;
 }
