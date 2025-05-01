@@ -65,6 +65,16 @@ bool isInAdjustmentMode = false;
 ZTimer ledTimer;
 LED led = LED(LED_PIN, INITIAL_PULSE_BRIGHTNESS);
 
+/**
+ * Handles the LED timer event. If the device is in adjustment mode, it updates the LED state.
+ * This applies the brightness changes to the LED in a pulsating manner.
+ */
+void handleLedTimerEvent() {
+  if(isInAdjustmentMode){      
+    led.update();
+  }
+}
+
 void setup() {  
   ADCSRA = 0; // disable ADC as we don't need it and can save a bit of energy 
   pinMode(LED_PIN, OUTPUT);
@@ -72,11 +82,7 @@ void setup() {
   pinMode(RELAY_PIN, OUTPUT);
   relayActivationDuration = getRelayActivationDurationFromMemory();
   
-  ledTimer.setCallBack([&]() {
-    if(isInAdjustmentMode){      
-      led.update();
-    }    
-  });
+  ledTimer.setCallBack(handleLedTimerEvent);
   ledTimer.setWaitTime(LED_PULSE_TIME / LED_PULSE_STEPS / 2);
   ledTimer.resetTimer(true);
 }
